@@ -40,8 +40,8 @@ PSRAM: OPI PSRAM
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 
-char ssid[] = "Makerfabs";
-char pass[] = "20160704";
+char ssid[] = "YOUR-SSID";
+char pass[] = "YOUR-PIN";
 
 WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient);
