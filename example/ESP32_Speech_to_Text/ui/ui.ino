@@ -48,34 +48,33 @@ PSRAM: OPI PSRAM
 #define SCREEN_W 320
 #define SCREEN_H 240
 
-// I2S配置
 #define I2S_SD 41
 #define I2S_SCK 42
 #define I2S_WS 2
 #define I2S_PORT I2S_NUM_0
-#define SAMPLE_RATE 16000 // 16kHz采样率
+#define SAMPLE_RATE 16000
 #define BUFFER_LEN 64
-#define RECORD_TIME 5 // 录音时长（秒）
+#define RECORD_TIME 5
 
 Arduino_ESP32SPI *bus = new Arduino_ESP32SPI(TFT_DC, TFT_CS, TFT_SCLK, TFT_MOSI, TFT_MISO, HSPI, true); // Constructor
 Arduino_GFX *gfx = new Arduino_ST7789(bus, TFT_RES, 1 /* rotation */, true /* IPS */);
 BBCapTouch bbct;
 
-const char* ssid = "1";
-const char* password = "12345687";
+const char* ssid = "YOUR-SSID";
+const char* password = "YOUR-PIN";
 
-// Baidu API config
-const char* apiKey = "DvhCieLlsxHngIp9xg03JG7V";
-const char* secretKey = "Qfuvo00aoSe3UQc88dorHCDd2KIl0E6w";
+// 百度智能云配置
+const char* apiKey = "YOUR-APIKEY";
+const char* secretKey = "YOUR-SECRETKEY";
 const char* tokenUrl = "https://aip.baidubce.com/oauth/2.0/token";
 const char* asrUrl = "https://vop.baidu.com/server_api";
 
-String accessToken = ""; // Used to store Baidu API access token
+String accessToken = "";
 
-int16_t sBuffer[BUFFER_LEN]; // Audio data buffer
-uint8_t* audioBuffer = nullptr; // Store recorded audio data
-size_t audioBufferSize = 0; // Total size of audio data
-bool isRecording = false; // Is recording in progress
+int16_t sBuffer[BUFFER_LEN]; // 音频数据缓冲区
+uint8_t* audioBuffer = nullptr; // 存储录制的音频数据
+size_t audioBufferSize = 0; // 音频数据总大小
+bool isRecording = false; // 是否正在录音
 
 lv_state_t speak_state;
 
@@ -128,10 +127,11 @@ void setup()
   pinMode(TFT_BLK, OUTPUT);
   digitalWrite(TFT_BLK, 1);
   
+  WiFi.begin(ssid, password);
   // Init touch device
   bbct.init(TOUCH_SDA, TOUCH_SCL, TOUCH_RST, TOUCH_INT);
 
-  // Initialize I2S
+  // 初始化I2S
   i2s_install();
   i2s_setpin();
   i2s_start(I2S_PORT);
@@ -139,13 +139,8 @@ void setup()
   // Init Display
   gfx->begin();
   gfx->fillScreen(RGB565_BLACK);
-  gfx->setTextSize(3);
-  gfx->setCursor(10, 10);
-  gfx->setTextColor(RED);
-  gfx->println(F("Connecting to WiFi..."));
-
   lv_init();
-  
+
   screenWidth = SCREEN_W;
   screenHeight = SCREEN_H;
 #ifdef ESP32
@@ -182,30 +177,27 @@ void setup()
 
     Serial.println("Connecting to WiFi...");
 
-    WiFi.begin(ssid, password);
-    whi (WiFi.status() != WL_CONNECTED)
+    while (WiFi.status() != WL_CONNECTED)
     {
       Serial.println("Connecting to WiFi...");
       lv_textarea_set_text(ui_TextArea1, "Connecting to WiFi...");
       delay(500);
     }
     
-    // Get Baidu API access token
     getBaiduAccessToken();
 
-    // Initialize audio buffer
-    audioBufferSize = SAMPLE_RATE * RECORD_TIME * 2; // 16-bit resolution, single channel
+    audioBufferSize = SAMPLE_RATE * RECORD_TIME * 2;
     audioBuffer = (uint8_t*)malloc(audioBufferSize);
     if (audioBuffer == nullptr)
     {
-      Serial.println("Audio buffer allocation failure");
+      Serial.println("音频缓冲区分配失败");
       lv_textarea_set_text(ui_TextArea1, "Audio buffer allocation failure");
       while (1);
     }
 
     Serial.println("Setup done");
 
-    xTaskCreatePinnedToCore(Task_TFT, "Task_TFT", 40960, NULL, 3, NULL, 0);
+    xTaskCreatePinnedToCore(Task_TFT, "Task_TFT", 40960, NULL, 3, NULL, 0); 
     xTaskCreatePinnedToCore(Task_main, "Task_main", 40960, NULL, 2, NULL, 1);
   }
 }
@@ -230,7 +222,7 @@ void Task_main(void *pvParameters)
     speak_state = lv_obj_get_state(ui_Button1); 
     if((speak_state & LV_STATE_PRESSED))
     {
-        Serial.println("Start recording...");
+        Serial.println("开始录音...");
         lv_textarea_set_text(ui_TextArea1, "Start recording...");
         isRecording = true;
         recordAudio();
@@ -239,12 +231,12 @@ void Task_main(void *pvParameters)
     {
       if (isRecording)
       {
-        Serial.println("Recording complete.");
+        Serial.println("录音完成");
         lv_textarea_set_text(ui_TextArea1, "Recording complete.");
-        // Print audio data (for debugging)
-        Serial.println("Audio data pointer: " + String((uintptr_t)audioBuffer, HEX));
-        Serial.println("Length of audio data: " + String(audioBufferSize));
-        for (int i = 0; i < 10; i++) { // Print first 10 audio samples
+
+        Serial.println("音频数据指针: " + String((uintptr_t)audioBuffer, HEX));
+        Serial.println("音频数据长度: " + String(audioBufferSize));
+        for (int i = 0; i < 10; i++) {
           Serial.println(((int16_t*)audioBuffer)[i]);
         }
 
@@ -275,7 +267,6 @@ int get_touch(uint16_t *x, uint16_t *y)
     return 0;
 }
 
-// Get Baidu API access token
 void getBaiduAccessToken()
 {
   HTTPClient http;
@@ -289,7 +280,7 @@ void getBaiduAccessToken()
     DynamicJsonDocument doc(256);
     deserializeJson(doc, payload);
     accessToken = doc["access_token"].as<String>();
-    Serial.println("Get Access Token: " + accessToken);
+    Serial.println("获取Access Token成功: " + accessToken);
     lv_textarea_set_text(ui_TextArea1, "Get Access Token");
   }
   else
@@ -297,7 +288,7 @@ void getBaiduAccessToken()
     gfx->fillScreen(RGB565_BLACK);
     gfx->setCursor(0, 10);
     lv_textarea_set_text(ui_TextArea1, "Get Access Token Fail");
-    Serial.print("Get Access Token Fail");
+    Serial.print("获取Access Token失败");
   }
 
   http.end();
@@ -313,13 +304,12 @@ void recordAudio()
     esp_err_t result = i2s_read(I2S_PORT, sBuffer, BUFFER_LEN * 2, &bytesRead, portMAX_DELAY);
     if (result == ESP_OK)
     {
-      // Copy the read data to the audio buffer
       memcpy(audioBuffer + totalBytesRead, sBuffer, bytesRead);
       totalBytesRead += bytesRead;
     }
     else
     {
-      Serial.println("I2S read failed");
+      Serial.println("I2S read fail");
       break;
     }
   }
@@ -358,7 +348,7 @@ String baiduSTT_Send(String access_token, uint8_t* audioData, int audioDataSize)
   strcat(data_json, "{");
   strcat(data_json, "\"format\":\"pcm\",");
   strcat(data_json, "\"rate\":16000,");
-  strcat(data_json, "\"dev_pid\":1737,");//English：1737.Chinese：1537
+  strcat(data_json, "\"dev_pid\":1737,");
   strcat(data_json, "\"channel\":1,");
   strcat(data_json, "\"cuid\":\"57722200\",");
   strcat(data_json, "\"token\":\"");
