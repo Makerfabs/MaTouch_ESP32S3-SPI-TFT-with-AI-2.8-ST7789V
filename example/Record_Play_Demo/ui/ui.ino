@@ -77,7 +77,6 @@ int play_flag = 0;
 Arduino_ESP32SPI *bus = new Arduino_ESP32SPI(TFT_DC, TFT_CS, SCLK, MOSI, MISO, HSPI, true); // Constructor
 Arduino_GFX *gfx = new Arduino_ST7789(bus, TFT_RES, 1 /* rotation */, true /* IPS */);
 BBCapTouch bbct;
-//Audio audio;
 
 /* Change to your screen resolution */
 static uint32_t screenWidth;
@@ -183,8 +182,6 @@ void setup()
 
     ui_init();
 
-    //audio.setPinout(I2S_BCLK, I2S_LRC, I2S_DOUT);
-    //audio.setVolume(10); // 0...21
     I2S_Mic_Init();
     I2S_Speaker_Init();
     Serial.println("Setup done");
@@ -277,15 +274,17 @@ void Task_main(void *pvParameters)
   }
 }
 
-void playWavFromSD(const char *filename) {
+void playWavFromSD(const char *filename)
+{
   File audioFile = SD.open(filename);
-  if (!audioFile) {
+  if (!audioFile)
+  {
     Serial.println("Failed to open audio file!");
     return;
   }
 
-  // 跳过 WAV 头（44字节）
-  if (audioFile.size() <= 44) {
+  if (audioFile.size() <= 44)
+  {
     Serial.println("File too short to be a valid WAV.");
     audioFile.close();
     return;
@@ -299,7 +298,6 @@ void playWavFromSD(const char *filename) {
   size_t bytesRead, bytesWritten;
   while ((bytesRead = audioFile.read(buffer, bufferSize)) > 0)
   {
-    // 提高音量：每个 16bit 样本乘以 2^gain
     for (int i = 0; i < bytesRead; i += 2)
     {
       int16_t *sample = (int16_t *)&buffer[i];
@@ -318,7 +316,7 @@ void I2S_Mic_Init()
   i2s_config_t i2s_config_in = {
     .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX),
     .sample_rate = SAMPLE_RATE,
-    .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,  // 注意：INMP441 输出 32 位数据
+    .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
     .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
     .communication_format = i2s_comm_format_t(I2S_COMM_FORMAT_STAND_I2S),
     .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
@@ -334,7 +332,7 @@ void I2S_Mic_Init()
     .data_out_num = -1,
     .data_in_num = I2S_IN_DIN
   };
-  i2s_driver_uninstall(I2S_IN_PORT); // 确保干净初始化
+  i2s_driver_uninstall(I2S_IN_PORT);
   i2s_driver_install(I2S_IN_PORT, &i2s_config_in, 0, NULL);
   i2s_set_pin(I2S_IN_PORT, &pin_config_in);
   i2s_set_clk(I2S_IN_PORT, SAMPLE_RATE, I2S_BITS_PER_SAMPLE_16BIT, I2S_CHANNEL_MONO);
@@ -414,6 +412,7 @@ void record_wav(String fileName)
   Serial.printf("Recording complete: \n");
   //Serial.printf("Send rec for a new sample or enter a new label\n\n");
 }
+
 void generate_wav_header(uint8_t *wav_header, uint32_t wav_size, uint32_t sample_rate)
 {
   // See this for reference: http://soundfile.sapp.org/doc/WaveFormat/
@@ -436,6 +435,7 @@ void generate_wav_header(uint8_t *wav_header, uint32_t wav_size, uint32_t sample
   };
   memcpy(wav_header, set_wav_header, sizeof(set_wav_header));
 }
+
 int get_touch(uint16_t *x, uint16_t *y)
 {
   TOUCHINFO ti;
@@ -452,6 +452,7 @@ int get_touch(uint16_t *x, uint16_t *y)
   else
     return 0;
 }
+
 void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
     Serial.printf("Listing directory: %s\n", dirname);
 
