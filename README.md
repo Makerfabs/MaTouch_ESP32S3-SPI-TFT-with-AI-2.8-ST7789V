@@ -29,8 +29,7 @@ Wiki Link:  [MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V](https://wiki.makerfabs
 
 ### ESP32_Speech_to_Text
 
-This demo implements the function of converting voice to text and display the converted text on the screen. Press and hold the "Speak" button to start recording, and release it to initiate the conversion from voice to text. 
-
+This demo implements the function of converting voice to text and display the converted text on the screen.
 ![](md_pic/image1.png)
 
 #### Applying for a Speech Recognition API
@@ -65,10 +64,59 @@ At this point, the API key for speech recognition has been successfully obtained
 
 #### Arduino IDE
 
+- Install the library file according to the following version.
 
+```c++
+/*
+Library version:
+GFX Library for Arduino v1.5.6
+bb_captouch v1.3.1
+ArduinoJson v7.2.0
+UrlEncode v1.0.1
+base64 v1.3.0
+*/
+```
 
+![](md_pic/u1.png)
 
+- Download and copy the [ui and lvgl](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main/example/ESP32_Speech_to_Text/libraries) library into the arduino library.(Usually located at C:\Users\Username\Documents\Arduino\libraries)
+![](md_pic/u2.png)
 
-### ESP32_Speech_to_Text
+- Open the [ui.ino](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/blob/main/example/ESP32_Speech_to_Text/ui/ui.ino) by Arduino.
 
+Use Type-C USB cable to connect the board and PC, and select the development board "ESP32S3 Dev Module" and the port.
 
+- Select "Tools > board:"xxx" > ESP32 Arduino > ESP32S3 Dev Module".
+
+- Select "Tools > Port", Select the port number of the board.
+
+- Select Flash Size is 16MB(128MB), Partition Scheme is 16M Flash (3MB APP/9.9MB FATFS), PSRAM is OPI PSRAM.
+![](md_pic/u3.png)
+
+- Click the Upload button in the Arduino IDE and wait for the code to upload.
+
+**Results**
+Press and hold the **Speak** button to start recording, and release it to initiate the conversion from voice to text. 
+![](md_pic/u4.png)
+
+### ESP32_Text_to_Speech
+
+- Install ESP32-audioI2S-master v2.0.0
+![](md_pic/u5.png)
+
+- Open the [ESP32_Text_to_Speech.ino](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/blob/main/example/ESP32_Text_to_Speech/ESP32_Text_to_Speech.ino) by Arduino.
+
+Use Type-C USB cable to connect the board and PC, and select the development board "ESP32S3 Dev Module" and the port.
+
+- Select "Tools > board:"xxx" > ESP32 Arduino > ESP32S3 Dev Module".
+
+- Select "Tools > Port", Select the port number of the board.
+
+- Select Flash Size is 16MB(128MB), Partition Scheme is 16M Flash (3MB APP/9.9MB FATFS), PSRAM is OPI PSRAM.
+![](md_pic/u3.png)
+
+- Click the Upload button in the Arduino IDE and wait for the code to upload.
+
+**Results**
+Converts sound from serial port input.
+![](md_pic/u6.png)
