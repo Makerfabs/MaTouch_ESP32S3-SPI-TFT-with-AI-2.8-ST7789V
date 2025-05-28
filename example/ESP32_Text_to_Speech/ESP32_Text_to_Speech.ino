@@ -24,8 +24,8 @@ PSRAM: OPI PSRAM
 
 Audio audio;
 
-const char* ssid = "TP-LINK_401";
-const char* password = "20160704";
+const char* ssid = "YOUR-SSID";
+const char* password = "YOUR-PIN";
 
 
 void setup()
