@@ -6,9 +6,7 @@ Product Link: [MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V]()
 
 Wiki Link:  [MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V](https://wiki.makerfabs.com/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V.html)
 
-Example: 
-
-1.[ESP32_Speech_to_Text](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main?tab=readme-ov-file#esp32_speech_to_text)
+Example: 1.[ESP32_Speech_to_Text](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main?tab=readme-ov-file#esp32_speech_to_text)
 
 2.[ESP32_Text_to_Speech](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main?tab=readme-ov-file#esp32_text_to_speech)
 
