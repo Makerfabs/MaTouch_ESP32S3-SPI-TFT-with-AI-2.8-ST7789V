@@ -6,6 +6,10 @@ Product Link: [MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V]()
 
 Wiki Link:  [MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V](https://wiki.makerfabs.com/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V.html)
 
+[ESP32_Speech_to_Text](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main?tab=readme-ov-file#esp32_speech_to_text)
+
+[ESP32_Text_to_Speech](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main?tab=readme-ov-file#esp32_text_to_speech)
+
 ## Feature
 
 - Controller: ESP32-S3
@@ -122,6 +126,8 @@ Press and hold the **Speak** button to start recording, and release it to initia
 ![](md_pic/u4.png)
 
 ### ESP32_Text_to_Speech
+
+This demo implements the function of converting text to sound, receive text via the serial port and use **Google's online Text-to-Speech (TTS) service** to read the text aloud.
 
 - Install ESP32-audioI2S-master v2.0.0
 
