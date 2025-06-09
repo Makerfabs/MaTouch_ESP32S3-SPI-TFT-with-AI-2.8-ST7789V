@@ -1,8 +1,8 @@
 /*
 Author: Yuki
-Date:2025.5.21
+Date:2025.6.9
 Code version: V1.0.0
-Note: 
+Note: Add flip (mirror) to camera display
 
 Library version:
 Arduino IDE 2.3.4
@@ -15,7 +15,7 @@ Tools:
 Flash size: 16MB(128Mb)
 Partition Schrme: 16M Flash(3MB APP/9.9MB FATFS)
 PSRAM: OPI PSRAM
-*/
+*/ 
 
 #include <Arduino_GFX_Library.h>
 #include <bb_captouch.h>
@@ -48,7 +48,7 @@ PSRAM: OPI PSRAM
 #define PIN_SD_D0 41
 
 Arduino_ESP32SPI *bus = new Arduino_ESP32SPI(TFT_DC, TFT_CS, SCLK, MOSI, MISO, HSPI, true); // Constructor
-Arduino_GFX *gfx = new Arduino_ST7789(bus, TFT_RES, 0 /* rotation */, true /* IPS */);
+Arduino_GFX *gfx = new Arduino_ST7789(bus, TFT_RES, 1 /* rotation */, true /* IPS */);
 BBCapTouch bbct;
 
 uint8_t* jpgArray = nullptr;
@@ -102,9 +102,9 @@ void setup()
   gfx->fillScreen(WHITE);
   Serial.println("Color Over");*/
 
-  gfx->fillRect(200, 280, 40, 40, BLUE);
+  gfx->fillRect(280, 200, 40, 40, BLUE);
   gfx->setTextSize(1);
-  gfx->setCursor(210, 290);
+  gfx->setCursor(290, 210);
   gfx->setTextColor(YELLOW);
   gfx->println(F("CAM"));
 
@@ -114,7 +114,7 @@ void setup()
 
       if (get_touch(&x, &y))
       {
-          if (x > 200 && x < 240 && y > 280 && y < 320)
+          if (x > 280 && x < 320 && y > 200 && y < 240)
               break;
           Serial.print(x);
           Serial.print(",");
@@ -136,7 +136,6 @@ void loop()
 
     camera_fb_t *fb = NULL;
     fb = esp_camera_fb_get();
-
     // char s[20];
     // sprintf(s, "x %d y %d", fb->width, fb->height);
     // Serial.println(s);
@@ -145,8 +144,8 @@ void loop()
 
     esp_camera_fb_return(fb);
 
-    gfx->setCursor(10, 280);
-    gfx->fillRect(10, 280, 50, 8, BLUE);
+    gfx->setCursor(250, 10);
+    gfx->fillRect(250, 10, 50, 8, BLUE);
 
     runtime = millis() - runtime;
     char s[20];
@@ -163,8 +162,8 @@ int get_touch(uint16_t *x, uint16_t *y)
         // *x = ti.y[0];
         // *y = map(ti.x[0], 240, 0, 0, 240);
 
-        *x = ti.x[0];
-        *y = ti.y[0];
+        *x = ti.y[0];
+        *y = 240-ti.x[0];
 
         return 1;
     }
@@ -373,7 +372,8 @@ void camera_init_s3()
     sensor_t *s = esp_camera_sensor_get();
     if (s->id.PID == OV3660_PID)
     {
-        s->set_vflip(s, 1);      // flip it back
+        s->set_hmirror(s, 1);    //左右翻转
+        s->set_vflip(s, 1);      // flip it back左右翻转
         s->set_brightness(s, 1); // up the brightness just a bit
         s->set_saturation(s, 0); // lower the saturation
     }
