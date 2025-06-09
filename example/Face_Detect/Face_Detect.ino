@@ -144,6 +144,7 @@ void camera_init_s3()
     sensor_t *s = esp_camera_sensor_get();
     if (s->id.PID == OV3660_PID)
     {
+        s->set_hmirror(s, 1);    //左右翻转
         s->set_vflip(s, 1);       // flip it back
         s->set_brightness(s, 1);  // up the brightness just a bit
         s->set_saturation(s, -2); // lower the saturation
