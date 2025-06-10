@@ -10,7 +10,7 @@ Example: 1.[ESP32_Speech_to_Text](https://github.com/Makerfabs/MaTouch_ESP32S3-S
 
 2.[ESP32_Text_to_Speech](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main?tab=readme-ov-file#esp32_text_to_speech)
 
-3.[AI_XiaoZhi]()
+3.[AI_XiaoZhi](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main?tab=readme-ov-file#ai_xiaozhi)
 
 ## Feature
 
