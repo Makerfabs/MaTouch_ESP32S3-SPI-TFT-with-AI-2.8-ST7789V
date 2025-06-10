@@ -10,6 +10,8 @@ Example: 1.[ESP32_Speech_to_Text](https://github.com/Makerfabs/MaTouch_ESP32S3-S
 
 2.[ESP32_Text_to_Speech](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main?tab=readme-ov-file#esp32_text_to_speech)
 
+3.[AI_XiaoZhi]()
+
 ## Feature
 
 - Controller: ESP32-S3
@@ -156,3 +158,43 @@ Use Type-C USB cable to connect the board and PC, and select the development boa
 Converts sound from serial port input.
 
 ![](md_pic/u6.png)
+
+### AI_XiaoZhi
+
+This demo demonstrates the implementation of an AI conversational system.
+
+#### Environment
+
+VS Code with ESP-IDF v5.4.1
+
+- Open the [AI_XiaoZhi](https://github.com/Makerfabs/MaTouch_ESP32S3-SPI-TFT-with-AI-2.8-ST7789V/tree/main/example/AI_XiaoZhi) by VS code.
+
+- Open main.cc, choose ESP-IDF version 5.4.1, configure the device target as esp32s3, select com port and click "Flash Dveice".
+
+![](md_pic/u9.png)
+
+
+- Enable Wi-Fi and connect to the xiaozhi-xxxx network. 
+
+- Once connected, open a web browser and visit 192.168.4.1 to access the device's network configuration interface.
+
+- Connect to your network.
+
+![](md_pic/u10.png)
+
+
+- Go to the [Xiaozhi control panel](https://xiaozhi.me/console/agents) to register your device.
+
+![](md_pic/u11.png)
+
+- Click "Add Device" and input the verification code as prompted by the audio.
+
+![](md_pic/u12.png)
+
+- Click 'Configure Role' to create your desired AI assistant. For example, you can customize its name, preferences, language, language model, and more
+
+![](md_pic/u13.png)
+
+![](md_pic/u14.png)
+
+- After saving, reset the board. You can wake it up using the wake words 'nihao, xiaozhi'.
