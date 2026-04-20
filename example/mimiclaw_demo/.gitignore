@@ -23,7 +23,6 @@ tmp/
 *.log
 
 # ESP/embedded local config
-sdkconfig
 sdkconfig.old
 
 # Dependency-generated
