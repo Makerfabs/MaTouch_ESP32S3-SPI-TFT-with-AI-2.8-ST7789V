@@ -1,0 +1,35 @@
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Env / secrets
+**/.env
+*.key
+*secret*
+main/mimi_secrets.h
+
+# Build / cache / temp
+build/
+dist/
+tmp/
+.cache/
+*.log
+
+# ESP/embedded local config
+sdkconfig
+sdkconfig.old
+
+# Dependency-generated
+managed_components/
+
+# Local docs not for GitHub
+MBEDTLS_SPIRAM_TUNING.md
+VOICE_AGENT_FLOW.md

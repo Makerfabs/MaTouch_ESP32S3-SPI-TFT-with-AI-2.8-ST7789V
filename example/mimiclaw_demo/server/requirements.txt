@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+python-multipart
+requests
+websocket-client
+openai
+python-dotenv
