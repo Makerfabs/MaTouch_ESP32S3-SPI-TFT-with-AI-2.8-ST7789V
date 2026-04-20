@@ -13,7 +13,6 @@ __pycache__/
 # Env / secrets
 **/.env
 *.key
-*secret*
 main/mimi_secrets.h
 
 # Build / cache / temp
