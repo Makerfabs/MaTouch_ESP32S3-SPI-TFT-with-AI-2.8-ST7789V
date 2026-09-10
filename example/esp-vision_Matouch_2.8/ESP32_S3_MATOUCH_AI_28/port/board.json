@@ -1,0 +1,17 @@
+{
+    "deploy": [
+        "../deploy.md"
+    ],
+    "docs": "",
+    "features": [
+        "WiFi",
+        "DVP",
+        "OV3660",
+        "ST7789V"
+    ],
+    "mcu": "esp32s3",
+    "product": "MaTouch ESP32-S3 SPI TFT with AI 2.8",
+    "thumbnail": "",
+    "url": "https://www.makerfabs.com/esp32-s3-spi-tft-with-touch-2-8-inch.html",
+    "vendor": "Makerfabs"
+}

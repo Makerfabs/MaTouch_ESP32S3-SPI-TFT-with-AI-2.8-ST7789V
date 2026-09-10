@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Espressif Systems (Shanghai) CO LTD
+# SPDX-License-Identifier: Apache-2.0
+
+board: esp32_s3_matouch_ai_28
+chip: esp32s3
+version: 1.0.0
+description: "MaTouch ESP32-S3 SPI TFT with AI 2.8"
+manufacturer: "Makerfabs"
